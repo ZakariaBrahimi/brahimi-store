@@ -5,7 +5,7 @@ function ProductCard() {
     <div className="border hover:rotate-1 transition-transform duration-500 hover:scale-105 cursor-pointer shadow-lg rounded-md flex justify-center items-center flex-col">
       <img className="w-full h-auto rounded-t-md shadow-md" src={product} alt="product" />
       <div className="flex justify-center items-center flex-col gap-4  py-2">
-        <h2 className=" text-base font-bold">DNK Blue Shoes</h2>
+        <h2 className=" text-base font-bold">DNK red Shoes</h2>
         {/* stars */}
         <div className="flex gap-2">
             {[1, 2, 3, 4, 5].map((index) => (
@@ -25,9 +25,9 @@ function ProductCard() {
         </div>
         {/* price */}
         <div className=" flex gap-4  font-bold text-[.9rem]">
-            <span className="text-red-400">1200دج</span>
+            <span className="text-blue-400">1200دج</span>
             <span> - </span>
-            <span className="text-blue-400 line-through">1200دج</span>
+            <span className="text-red-400 line-through">1200دج</span>
         </div>
 
       </div>

@@ -19,7 +19,7 @@ export default function App() {
     InputRef.classList.add('w-100')
   }
   return (
-    <Navbar className="bg-green-2 mb-14 z-50 bg-white" isBordered onMenuOpenChange={setIsMenuOpen}>
+    <Navbar className="bg-green-2 mb-14 z-40 bg-white static" isBordered onMenuOpenChange={setIsMenuOpen}>
       <NavbarContent>
         <NavbarMenuToggle
           aria-label={isMenuOpen ? "Close menu" : "Open menu"}
@@ -77,7 +77,7 @@ export default function App() {
           </Button>
         </NavbarItem> */}
       </NavbarContent>
-      <NavbarMenu>
+      <NavbarMenu className="top-32">
         <NavbarItem className="relative ">
             <button onClick={expandSearchInput} className="  absolute top-[50%] right-3 -translate-y-[50%]" type="button">
                     <svg

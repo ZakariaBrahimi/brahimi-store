@@ -4,8 +4,15 @@
 
 
 
-
+*, html, body{
+    font-family: 'Cairo', Arial, sans-serif;
+    
+}
 #searchInput{
     transition: width 200ms ease-in;
     
+}
+label{
+    text-align: right;
+    float: right;
 }

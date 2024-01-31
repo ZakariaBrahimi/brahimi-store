@@ -1,19 +1,23 @@
+import { Link } from "react-router-dom";
 import ProductCard from "../../components/ProductCard";
 import Slider from "./Slider";
 import { Button } from "@nextui-org/react";
 
 const Index = () => {
   return (
-    <section className=" space-y-10 w-11/12 lg:w-9/12 xl:w-8/12 mx-auto my-8">
+    <section className=" space-y-10 w-11/12 lg:w-9/12 xl:w-8/12 mx-auto mt-8">
       <Slider />
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-x-6 gap-y-8 ">
         {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((index) => (
-          <ProductCard key={index} />
+            <Link to={'product'} key={index}>
+                <ProductCard  />
+        
+            </Link>
         ))}
       </div>
-      <div className="w-fit mx-auto">
+      <div className="w-fit mx-auto mb-8">
         <Button
-          className="text-center font-semibold"
+          className="text-center font-semibold mb-16"
           color="primary"
           variant="shadow"
         >
