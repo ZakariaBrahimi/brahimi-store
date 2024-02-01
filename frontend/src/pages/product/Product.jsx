@@ -134,9 +134,9 @@ const Product = () => {
           ShoesDNK Blue Shoes
         </p>
       </div>
-      <Modal className=""
+      <Modal className="    "
         isOpen={isOpen} 
-        placement={'bottom-center'}
+        placement={'auto'}
         onOpenChange={onOpenChange} 
       >
         <ModalContent>
