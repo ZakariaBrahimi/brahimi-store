@@ -1,7 +1,7 @@
+@import "react-image-gallery/styles/css/image-gallery.css";
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
 
 
 *, html, body{
@@ -15,4 +15,8 @@
 label{
     text-align: right;
     float: right;
+}
+.image-gallery-svg{
+    width: 30px!important;
+
 }

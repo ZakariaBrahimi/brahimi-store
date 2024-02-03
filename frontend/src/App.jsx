@@ -4,6 +4,7 @@ import Index from './pages/home/Index';
 import Footer from './components/Footer';
 import CallUsTopBar from './components/CallUsTopBar';
 import Product from './pages/product/Product';
+// import Styles from './index.css';
 function App() {
 
   return (

@@ -12,21 +12,45 @@ import {
 } from "@nextui-org/react";
 import slider_1 from "../../assets/1-slider.jpg";
 import { useState } from "react";
+import ImageGallery from "react-image-gallery";
+
 const Product = () => {
   const [quantity, setQuantity] = useState(1);
   const {isOpen, onOpen, onOpenChange} = useDisclosure();
-
+  const images = [
+    {
+      original: "https://picsum.photos/id/1018/1000/600/",
+      thumbnail: "https://picsum.photos/id/1018/250/150/",
+    },
+    {
+      original: "https://picsum.photos/id/1015/1000/600/",
+      thumbnail: "https://picsum.photos/id/1015/250/150/",
+    },
+    {
+      original: "https://picsum.photos/id/1019/1000/600/",
+      thumbnail: "https://picsum.photos/id/1019/250/150/",
+    },
+    {
+      original: "https://picsum.photos/id/1019/1000/600/",
+      thumbnail: "https://picsum.photos/id/1019/250/150/",
+    },
+    {
+      original: "https://picsum.photos/id/1019/1000/600/",
+      thumbnail: "https://picsum.photos/id/1019/250/150/",
+    },
+  ];
 
   return (
     <section className="w-11/12 mx-auto mb-28 bg-white grid grid-cols-1 lg:grid-cols-2 gap-6 items-start justify-between">
       {/* Product Pics */}
       <div className=" lg:order-2 flex flex-col gap-6 lg:col-span-1">
-        <img className="w-full h-80" src={slider_1} alt="" />
+      <ImageGallery showIndex={true} className='w-90 flex ' items={images} />
+        {/* <img className="w-full h-80" src={slider_1} alt="" />
         <div className="flex gap-4 items-center justify-center">
           <img className="w-full h-full" src={slider_1} alt="" />
           <img className="w-full h-full" src={slider_1} alt="" />
           <img className="w-full h-full" src={slider_1} alt="" />
-        </div>
+        </div> */}
       </div>
       {/* Product Details && FORM */}
       <div className="lg:order-1 lg:col-span-1">
