@@ -2,16 +2,42 @@ import { Link } from "react-router-dom";
 import ProductCard from "../../components/ProductCard";
 import Slider from "./Slider";
 import { Button } from "@nextui-org/react";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
 
 const Index = () => {
+    const fetchProductsList = async ()=>{
+        const { data } = await axios ({
+            url: `https://06pfaut4.api.sanity.io/v1/data/query/production?query=*[_type == "product"]`,
+            method: 'GET',
+            header: {
+                "Content-Type": "application/json",
+            }
+        })
+        return data
+    }
+    const {isPending, isError, data, error} = useQuery({
+        queryKey: ['products'],
+        queryFn: fetchProductsList,
+    })
+    if (isPending) {
+        return <span>Loading...</span>
+      }
+    
+      if (isError) {
+        return <span>Error: {error.message}</span>
+      }
+      if (data?.result) {
+        // console.log(data?.result)
+        console.log(data?.result)
+      }
   return (
     <section className=" space-y-10 w-11/12 lg:w-9/12 xl:w-8/12 mx-auto mt-8">
       <Slider />
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-x-6 gap-y-8 ">
-        {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((index) => (
-            <Link to={'product'} key={index}>
-                <ProductCard  />
-        
+        {data?.result.map((product) => (
+            <Link to={`${product?.name}/${product?._id}`} state={{ product_id: product?._id }} key={product?._id}>
+                <ProductCard product={product} />
             </Link>
         ))}
       </div>

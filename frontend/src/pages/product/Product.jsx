@@ -13,6 +13,7 @@ import {
 import slider_1 from "../../assets/1-slider.jpg";
 import { useState } from "react";
 import ImageGallery from "react-image-gallery";
+import { useLocation } from "react-router-dom";
 
 const Product = () => {
   const [quantity, setQuantity] = useState(1);
@@ -28,18 +29,20 @@ const Product = () => {
     },
     {
       original: "https://picsum.photos/id/1019/1000/600/",
-      thumbnail: "https://picsum.photos/id/1019/250/150/",
+      thumbnail: "https://picsum.photos/id/1019/1000/600/",
     },
     {
       original: "https://picsum.photos/id/1019/1000/600/",
-      thumbnail: "https://picsum.photos/id/1019/250/150/",
+      thumbnail: "https://picsum.photos/id/1019/1000/600/",
     },
     {
       original: "https://picsum.photos/id/1019/1000/600/",
-      thumbnail: "https://picsum.photos/id/1019/250/150/",
+      thumbnail: "https://picsum.photos/id/1019/1000/600/",
     },
   ];
-
+  const location = useLocation()
+  const { product_id } = location.state
+  console.log(product_id)
   return (
     <section className="w-11/12 mx-auto mb-28 bg-white grid grid-cols-1 lg:grid-cols-2 gap-6 items-start justify-between">
       {/* Product Pics */}

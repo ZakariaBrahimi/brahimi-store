@@ -25,21 +25,22 @@ export default function App() {
           aria-label={isMenuOpen ? "Close menu" : "Open menu"}
           className="sm:hidden"
         />
-        <NavbarBrand className="flex gap-2 items-center">
-          {/* <AcmeLogo /> */}
-          <img className="w-6 h-6" src={box}/>
-          <p className="font-bold text-inherit tracking-wider	"> <span className="text-red-500">Brahimi</span> Store</p>
-        </NavbarBrand>
+        <Link className=" cursor-pointer" to={"/"}>
+            <NavbarBrand className="flex gap-2 items-center">
+            <img className="w-6 h-6" src={box}/>
+            <p className="font-bold text-inherit tracking-wider	"> <span className="text-red-500">Brahimi</span> Store</p>
+            </NavbarBrand>
+        </Link>
       </NavbarContent>
 
       <NavbarContent className="hidden sm:flex gap-4 text-lg" justify="center">
         <NavbarItem isActive>
-          <Link color="foreground" href="#">
+          <Link color="foreground" href="/">
             الرئيسية
           </Link>
         </NavbarItem>
         <NavbarItem>
-          <Link href="#" aria-current="page">
+          <Link href="store" aria-current="page">
             متجـر
           </Link>
         </NavbarItem>
