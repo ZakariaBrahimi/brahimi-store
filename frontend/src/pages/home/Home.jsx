@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
 import ProductCard from "../../components/ProductCard";
 import Slider from "./Slider";
-import { Button } from "@nextui-org/react";
 import { useContext } from "react";
 import SanityDataContext from "../../context/SanityDataContext";
 
