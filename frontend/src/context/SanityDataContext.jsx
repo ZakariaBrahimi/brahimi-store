@@ -4,7 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 const SanityDataContext = createContext();
 export default SanityDataContext;
 const fetchProductsData = async () => {
-    const result = await fetch('https://06pfaut4.api.sanity.io/v1/data/query/production?query=*[_type == "product"][0...9]');
+    const result = await fetch('https://06pfaut4.api.sanity.io/v1/data/query/production?query=*[_type == "product"]');
     return result.json();
 };
 
