@@ -9,6 +9,7 @@ import {
   NavbarMenuToggle,
 } from "@nextui-org/react";
 import box from '../assets/box.png'
+import { NavLink } from "react-router-dom";
 
 export default function App() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
@@ -25,29 +26,30 @@ export default function App() {
           aria-label={isMenuOpen ? "Close menu" : "Open menu"}
           className="sm:hidden"
         />
-        <Link className=" cursor-pointer" to={"/"}>
+        <NavLink className=" cursor-pointer" to={"/"}>
             <NavbarBrand className="flex gap-2 items-center">
             <img className="w-6 h-6" src={box}/>
             <p className="font-bold text-inherit tracking-wider	"> <span className="text-red-500">Brahimi</span> Store</p>
             </NavbarBrand>
-        </Link>
+        </NavLink>
       </NavbarContent>
 
       <NavbarContent className="hidden sm:flex gap-4 text-lg" justify="center">
-        <NavbarItem isActive>
-          <Link color="foreground" href="/">
+        <NavbarItem>
+          <NavLink   className={({ isActive, isPending }) =>` hover:text-red-400 transition-all duration-500 ${isActive ? "text-red-400 font-semibold tracking-wider" : "text-"}`
+        } to={"/"}>
             الرئيسية
-          </Link>
+          </NavLink>
         </NavbarItem>
         <NavbarItem>
-          <Link href="store" aria-current="page">
+          <NavLink to={"store"} aria-current="page" className={({ isActive, isPending }) =>` hover:text-red-400 transition-all duration-500 ${isActive ? "text-red-400 font-semibold tracking-wider" : "text-"}`}>
             متجـر
-          </Link>
+          </NavLink>
         </NavbarItem>
         <NavbarItem>
-          <Link color="foreground" href="#">
+          <NavLink to={"whoAreWe"} className={({ isActive, isPending }) =>` hover:text-red-400 transition-all duration-500 ${isActive ? "text-red-400 font-semibold tracking-wider" : ""}`}>
             من نحن
-          </Link>
+          </NavLink>
         </NavbarItem>
       </NavbarContent>
       <NavbarContent className="" justify="end">

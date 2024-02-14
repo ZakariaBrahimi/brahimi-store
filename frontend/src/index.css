@@ -20,3 +20,19 @@ label{
     width: 30px!important;
 
 }
+.image-gallery-image{
+    width: 100%!important;
+    height: 25rem!important;
+    object-fit: fill!important
+}
+.image-gallery-thumbnail-image{
+    width: 6rem!important;
+    height: 4.5rem!important;
+}
+/* .image-gallery-slides{
+    height: 29rem!important;
+    width: 100%;
+    object-fit: cover!important;
+    border-radius: 10px;
+    border: 2px red solid ;
+} */

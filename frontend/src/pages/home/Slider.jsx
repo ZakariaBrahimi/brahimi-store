@@ -1,12 +1,44 @@
+import ImageGallery from 'react-image-gallery'
 import slider_1 from '../../assets/1-slider.jpg'
-
 function Slider() {
-    const sliderStyles = {
-        backgroundImage: `url(${slider_1})`
-    }
+    
+    const images = [
+        // {
+        //   original: "https://picsum.photos/id/1018/1000/600/",
+        //   thumbnail: "https://picsum.photos/id/1018/250/150/",
+        //   originalWidth: 10,
+          
+        // },
+        // {
+        //     original: "https://picsum.photos/id/1015/1000/600/",
+        //     thumbnail: "https://picsum.photos/id/1015/250/150/",
+        //     originalWidth: 10,
+        // },
+        {
+            original: slider_1,
+            thumbnail: slider_1,
+            // originalHeight:10000000,
+            // thumbnailHeight:'10px'
+        },
+        {
+            original: slider_1,
+        }
+      ];
   return (
-    <div style={sliderStyles} className=' rounded-lg shadow-lg border-1 border-red-500 p-1 mx-auto h-44 md:h-64 lg:h-96 bg-cover bg-center bg-no-repeat '>
+    <div className=''>
+        <ImageGallery
+            showIndex={true}
+            className=""
+            items={images}
+            showNav={false}
+            showThumbnails={false}
+            showFullscreenButton={false}
+            showPlayButton={false}
+            autoPlay={true}
+            // originalWidth={3}
+          />
     </div>
+    
   )
 }
 

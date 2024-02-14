@@ -2,24 +2,11 @@ import { Link } from "react-router-dom";
 import ProductCard from "../../components/ProductCard";
 import Slider from "./Slider";
 import { Button } from "@nextui-org/react";
-import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
+import { useContext } from "react";
+import SanityDataContext from "../../context/SanityDataContext";
 
 const Index = () => {
-    const fetchProductsList = async ()=>{
-        const { data } = await axios ({
-            url: `https://06pfaut4.api.sanity.io/v1/data/query/production?query=*[_type == "product"]`,
-            method: 'GET',
-            header: {
-                "Content-Type": "application/json",
-            }
-        })
-        return data
-    }
-    const {isPending, isError, data, error} = useQuery({
-        queryKey: ['products'],
-        queryFn: fetchProductsList,
-    })
+    const {products, isPending, isError, error } = useContext(SanityDataContext)
     if (isPending) {
         return <span>Loading...</span>
       }
@@ -27,28 +14,29 @@ const Index = () => {
       if (isError) {
         return <span>Error: {error.message}</span>
       }
-      if (data?.result) {
+      if (products) {
         // console.log(data?.result)
-        console.log(data?.result)
+        console.log(products?.result)
       }
+      console.log(typeof(data))
   return (
     <section className=" space-y-10 w-11/12 lg:w-9/12 xl:w-8/12 mx-auto mt-8">
       <Slider />
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-x-6 gap-y-8 ">
-        {data?.result.map((product) => (
+        {products?.result.slice(0, 9).map((product) => (
             <Link to={`${product?.name}/${product?._id}`} state={{ product_id: product?._id }} key={product?._id}>
                 <ProductCard product={product} />
             </Link>
         ))}
       </div>
-      <div className="w-fit mx-auto mb-8">
-        <Button
-          className="text-center font-semibold mb-16"
+      <div className="w-fit mx-auto mb-8 text-center font-semibold transition-all duration-700 shadow-md hover:scale-95 hover:rotate-1 hover:font-bld cursor-pointer bg-red-400 text-white  px-6 py-2  rounded-md shadow-red-400 ">
+        <Link to={'store'}
+          className=""
           color="primary"
           variant="shadow"
         >
           See all Products
-        </Button>
+        </Link>
       </div>
       <div className="flex flex-col items-center justify-between gap-12 text-center md:flex-row md:items-center md:justify-between opacity-85 py-16 bg-red-40">
         <div className="flex flex-col items-center justify-center gap-3">
@@ -151,7 +139,7 @@ const Index = () => {
               xmlSpace="preserve"
             >
               <path
-                class="bentblocks_een"
+                className="bentblocks_een"
                 d="M26,10h-2.485l-6-6l-5.888,6H6c-1.1,0-2,1.4-2,2.5V26c0,1.1,0.9,2,2,2h20c1.1,0,2-0.9,2-2V12
 	C28,10.9,27.1,10,26,10z M23.172,12.485L20.873,15h-0.481c-0.463-2.282-2.481-4-4.9-4c-1.115,0-2.14,0.366-2.967,0.984l4.989-5.155
 	L23.172,12.485z M18.32,15h-5.643c0.411-1.163,1.513-2,2.815-2C16.796,13,17.907,13.836,18.32,15z M11.418,13.128

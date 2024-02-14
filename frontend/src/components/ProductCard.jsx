@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import imageUrlBuilder from '@sanity/image-url'
 
 function ProductCard({product}) {
@@ -7,7 +8,6 @@ function ProductCard({product}) {
         dataset: 'production',
       })
       const urlFor = (source) => builder.image(source)
-    console.log(product?.product_pictures[0]?.asset?._ref)
   return (
     <div className="border hover:rotate-1 transition-transform duration-500 hover:scale-105 cursor-pointer shadow-lg rounded-md flex justify-center items-center flex-col">
       <img className="w-full h-28 rounded-t-md shadow-md" src={urlFor(product?.product_pictures[0]?.asset?._ref)} alt="productImg" />
