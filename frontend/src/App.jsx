@@ -5,9 +5,12 @@ import Footer from "./components/Footer";
 import CallUsTopBar from "./components/CallUsTopBar";
 import Product from "./pages/product/Product";
 import Store from "./pages/store/Store";
+import SanityDataContext from "./context/SanityDataContext";
+import { useContext } from "react";
 
 
 function App() {
+    
   return (
     <div className="text-right relative min-h-screen">
         <CallUsTopBar />

@@ -11,16 +11,16 @@ import {
   SelectItem,
   useDisclosure,
 } from "@nextui-org/react";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import ImageGallery from "react-image-gallery";
 import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import imageUrlBuilder from "@sanity/image-url";
-import BlockContent from '@sanity/block-content-to-react'
+// import BlockContent from '@sanity/block-content-to-react'
 import PortableText from '@sanity/block-content-to-react'
+import SanityDataContext from "../../context/SanityDataContext";
 
 const Product = () => {
-  // const {product, isPending, isError, error } = useContext(SanityDataContext)
   const params = useParams();
   const productID = params["product_id"];
   const fetchProductData = async () => {
@@ -54,13 +54,9 @@ const Product = () => {
     setImages([ ...newImages]);
   }, [data]);
   const serializers = {
-
     types: {
-  
       block: (props) => {
-  
         switch (props.node.style) {
-  
           case 'h1':
             return <h1 className="text-[2.375rem]">{props.children}</h1>
   
@@ -81,6 +77,8 @@ const Product = () => {
     }
   
   }
+  const {mutate } = useContext(SanityDataContext)
+  console.log(mutate)
   return (
     <section className="w-11/12 mx-auto mb-28 bg-white grid grid-cols-1 lg:grid-cols-2 gap-6 items-start justify-between">
       {/* Product Pics */}
