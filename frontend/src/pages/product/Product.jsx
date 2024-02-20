@@ -1,24 +1,12 @@
 /* eslint-disable react/prop-types */
-import {
-  Button,
-  Input,
-  Modal,
-  ModalBody,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
-  Select,
-  SelectItem,
-  useDisclosure,
-} from "@nextui-org/react";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import ImageGallery from "react-image-gallery";
 import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import imageUrlBuilder from "@sanity/image-url";
 // import BlockContent from '@sanity/block-content-to-react'
 import PortableText from '@sanity/block-content-to-react'
-import SanityDataContext from "../../context/SanityDataContext";
+import OrderForm from './OrderForm.jsx'
 
 const Product = () => {
   const params = useParams();
@@ -33,8 +21,7 @@ const Product = () => {
     queryKey: ["product"],
     queryFn: fetchProductData,
   });
-  const [quantity, setQuantity] = useState(1);
-  const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  
 
   const [images, setImages] = useState([]);
   useEffect(() => {
@@ -77,8 +64,8 @@ const Product = () => {
     }
   
   }
-  const {mutate } = useContext(SanityDataContext)
-  console.log(mutate)
+//   const {mutate } = useContext(SanityDataContext)
+//   console.log(mutate)
   return (
     <section className="w-11/12 mx-auto mb-28 bg-white grid grid-cols-1 lg:grid-cols-2 gap-6 items-start justify-between">
       {/* Product Pics */}
@@ -111,93 +98,8 @@ const Product = () => {
           <p>{data?.result[0]?.short_description}</p>
           <p></p>
         </div>
-        <div className="flex flex-col gap-4 border-[#D9D9D9] bg-[#FBFBFB] my-8  px-8 py-4 border">
-          <p>
-            للطلب أدخل معلوماتك في الخانات أسفله ???? .. ثم إضغط على زر اطلب
-            الان
-          </p>
-          <form
-            action=""
-            method="post"
-            className="flex flex-col gap-6 text-right"
-          >
-            <Input
-              className="text-right placeholder:text-right "
-              isRequired
-              variant="bordered"
-              size="sm"
-              type="text"
-              label="الإسم الكامـل"
-            />
-            <Input
-              isRequired
-              variant="bordered"
-              size="sm"
-              type="number"
-              label="رقـم الهاتف"
-            />
-            {/* <Input
-                isRequired
-                variant="bordered"
-                size="sm"
-                type="text"
-                label="العنوان الكـامل"
-            /> */}
-            <div className="flex gap-3">
-              {["batna", "Setif", "Alger", "Oran"].map((wilaya) => (
-                <SelectItem key={wilaya} value={wilaya}>
-                  {wilaya}
-                </SelectItem>
-              ))}
-              <Input
-                isRequired
-                variant="bordered"
-                size="sm"
-                type="text"
-                label="البلدية"
-              />
-              <Select
-                size="sm"
-                variant="bordered"
-                isRequired
-                label="الولايـة"
-                className="max-w-full bg-transparent"
-              ></Select>
-            </div>
-
-            <div className="flex justify-end w-full gap-7">
-              <Button
-                onPress={onOpen}
-                className="w-full font-bold"
-                color="primary"
-              >
-                اطلـب الان
-              </Button>
-              <div className="flex gap-3 items-center justify-end font-bold text-lg">
-                <button
-                  className="border rounded-md bg-white px-2"
-                  type="button"
-                  onClick={() => setQuantity((prev) => prev + 1)}
-                >
-                  +
-                </button>
-                <span>{quantity}</span>
-                {/* <input className='bg-transparent appearance-none font-semibold' type="number" onChange={(e)=>setQuantity(e.target.value)} value={quantity} min="1" name="quantity" id="quantity" required="" readOnly=""/> */}
-                <button
-                  className="border rounded-md bg-white px-2"
-                  type="button"
-                  onClick={() => {
-                    if (quantity > 1) {
-                      setQuantity((prev) => prev - 1);
-                    }
-                  }}
-                >
-                  -
-                </button>
-              </div>
-            </div>
-          </form>
-        </div>
+        
+      <OrderForm/>
       </div>
 
       {/* Description */}
@@ -207,53 +109,6 @@ const Product = () => {
         </h5>
         <PortableText blocks={data?.result[0]?.full_description} serializers={serializers} />
       </div>
-      <Modal
-        className="    "
-        isOpen={isOpen}
-        placement={"auto"}
-        onOpenChange={onOpenChange}
-      >
-        <ModalContent>
-          {(onClose) => (
-            <>
-              <ModalHeader className="flex flex-col gap-1"></ModalHeader>
-              <ModalBody>
-                <div>
-                  <div className="border-b-2 px-3 py-5 w-full flex flex-row-reverse justify-between items-center">
-                    <p className="font-bold">: المنتج</p>
-                    <p>DNK Blue Shoes</p>
-                  </div>
-                  <div className="border-b-2 px-3 py-5 w-full flex flex-row-reverse justify-between items-center">
-                    <p className="font-bold">: الكميـة</p>
-                    <p>{quantity}</p>
-                  </div>
-                  <div className="border-b-2 px-3 py-5 w-full flex flex-row-reverse justify-between items-center">
-                    <p className="font-bold">: سعر الشحـن</p>
-                    <p>600 DA</p>
-                  </div>
-                  <div className=" px-3 py-5 w-full flex flex-row-reverse justify-between items-center">
-                    <p className="font-bold">: السعر الإجمـالي</p>
-                    <p>1200 DA</p>
-                  </div>
-                </div>
-              </ModalBody>
-              <ModalFooter>
-                <Button
-                  className="font-bold"
-                  color="danger"
-                  variant="light"
-                  onPress={onClose}
-                >
-                  إلغـاء
-                </Button>
-                <Button className="font-bold" color="primary" onPress={onClose}>
-                  تأكيـد الطلبية
-                </Button>
-              </ModalFooter>
-            </>
-          )}
-        </ModalContent>
-      </Modal>
     </section>
   );
 };
