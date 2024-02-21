@@ -1,4 +1,5 @@
-import { useContext, useState } from "react";
+/* eslint-disable react/prop-types */
+import { useContext, useEffect, useState } from "react";
 import {
   Button,
   Input,
@@ -13,17 +14,18 @@ import {
 } from "@nextui-org/react";
 import axios from "axios";
 import { useMutation } from "@tanstack/react-query";
+import SanityDataContext from "../../context/SanityDataContext";
 
-const OrderForm = () => {
+const OrderForm = ({ product }) => {
   const [quantity, setQuantity] = useState(1);
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [order, setOrder] = useState({
     _type: "order",
     full_name: "",
-    phone: "",
-    wilaya: "",
-    state: "",
-    product: "1",
+    phone_number: "",
+    wilaya: {},
+    address: "",
+    product: {},
     quantity: quantity,
   });
   const createOrder = async (data) => {
@@ -49,21 +51,24 @@ const OrderForm = () => {
     mutationFn: createOrder,
     onError: (error, variables, context) => {
       // An error happened!
-      console.log(`rolling back optimistic update with id ${context.id}`);
     },
-    onSuccess: (data, variables, context) => {
-      console.log(data);
-      console.log("data");
-    },
+    onSuccess: (data, variables, context) => {},
     onSettled: (data, error, variables, context) => {
       // Error or success... doesn't matter!
     },
   });
   const handleSubmit = (event) => {
-    event.preventDefault();
-    console.log("xx");
-    mutation.mutate({...order,});
+    event.preventDefault()
+    product && setOrder(prev=>({...prev, product: JSON.parse(product)}))
+    setOrder(prev=>({...prev, quantity: quantity}))
+    mutation.mutate({ ...order });
   };
+
+  const { platformData } = useContext(SanityDataContext);
+  const wilayasData = platformData?.data?.result[0]?.delivery_price;
+  useEffect(() => {
+    console.log(order);
+  }, [order, quantity]);
   return (
     <div className="flex flex-col gap-4 border-[#D9D9D9] bg-[#FBFBFB] my-8  px-8 py-4 border">
       <p>
@@ -88,37 +93,41 @@ const OrderForm = () => {
           type="number"
           label="رقـم الهاتف"
           onChange={(e) =>
-            setOrder((prev) => ({ ...prev, phone: e.target.value }))
+            setOrder((prev) => ({ ...prev, phone_number: e.target.value }))
           }
         />
-        {/* <Input
-                isRequired
-                variant="bordered"
-                size="sm"
-                type="text"
-                label="العنوان الكـامل"
-            /> */}
         <div className="flex gap-3">
           <Input
             isRequired
             variant="bordered"
             size="sm"
             type="text"
-            label="البلدية"
-            />
+            label="العنوان الكـامل"
+            onChange={(e) =>
+                setOrder((prev) => ({ ...prev, address: e.target.value }))
+              }
+          />
+
           <Select
+            isRequired
             size="sm"
-            variant="bordered"
-            // isRequired
             label="الولايـة"
-            className="max-w-full bg-transparent"
-            >
-              {["batna", "Setif", "Alger", "Oran"].map((wilaya, index) => (
-                <SelectItem key={index} value={wilaya}>
-                  {wilaya}
+            variant="bordered"
+            placeholder="اختـر ولايتك"
+            className="max-w-xs"
+            onChange={(event) => {
+              setOrder((prev) => ({
+                ...prev,
+                wilaya: JSON.parse(event.target.value),
+              }));
+            }}
+          >
+            {wilayasData &&
+              wilayasData.map((wilaya) => (
+                <SelectItem key={JSON.stringify(wilaya)} value={wilaya}>
+                  {wilaya.wilaya}
                 </SelectItem>
               ))}
-
           </Select>
         </div>
 
@@ -126,23 +135,19 @@ const OrderForm = () => {
           <Button type="submit" className="w-full font-bold" color="primary">
             اطلـب الان
           </Button>
-          <button
-            // onClick={handleSubmit}
-            type="submit"
-            className="w-full font-bold"
-          >
+          <button type="submit" className="w-full font-bold">
             اطلـب الان
           </button>
           <div className="flex gap-3 items-center justify-end font-bold text-lg">
             <button
               className="border rounded-md bg-white px-2"
               type="button"
-              onClick={() => setQuantity((prev) => prev + 1)}
+              onClick={() => {setQuantity((prev) => prev + 1); 
+              }}
             >
               +
             </button>
             <span>{quantity}</span>
-            {/* <input className='bg-transparent appearance-none font-semibold' type="number" onChange={(e)=>setQuantity(e.target.value)} value={quantity} min="1" name="quantity" id="quantity" required="" readOnly=""/> */}
             <button
               className="border rounded-md bg-white px-2"
               type="button"

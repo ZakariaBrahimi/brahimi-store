@@ -99,7 +99,7 @@ const Product = () => {
           <p></p>
         </div>
         
-      <OrderForm/>
+      <OrderForm product={JSON.stringify(data?.result[0])}/>
       </div>
 
       {/* Description */}
