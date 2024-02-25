@@ -11,7 +11,7 @@ export default {
       },
       {
         name: 'short_description',
-        type: 'text',
+        type: 'string',
         title: 'Short Description'
       },
       {
