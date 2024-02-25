@@ -10,8 +10,20 @@ export default {
     },
     {
       name: 'primary_color',
-      type: 'text',
+      type: 'string',
       title: 'Primary Color',
+    },
+    {
+      name: 'adds',
+      type: 'array',
+      title: 'Adds',
+      of: [
+        {
+          name: 'add_img',
+          type: 'image',
+          title: 'Add Image',
+        },
+      ],
     },
     {
       name: 'delivery_price',

@@ -17,16 +17,22 @@ import { useMutation } from "@tanstack/react-query";
 import SanityDataContext from "../../context/SanityDataContext";
 
 const OrderForm = ({ product }) => {
-  const [quantity, setQuantity] = useState(1);
+    console.log(product)
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [order, setOrder] = useState({
     _type: "order",
     full_name: "",
     phone_number: "",
-    wilaya: {},
-    address: "",
-    product: {},
-    quantity: quantity,
+    wilaya: {
+        _ref: '8b80e431-a1e1-408d-b672-1b0e70968f53',
+        _type: 'delivery'
+    },
+    // address: "",
+    product: {
+        _ref : product?._id,
+        _type : "product"
+    },
+    quantity: 1,
   });
   const createOrder = async (data) => {
     const response = await axios({
@@ -59,16 +65,25 @@ const OrderForm = ({ product }) => {
   });
   const handleSubmit = (event) => {
     event.preventDefault()
-    product && setOrder(prev=>({...prev, product: JSON.parse(product)}))
-    setOrder(prev=>({...prev, quantity: quantity}))
+    console.log(typeof(product?._id))
+    console.log(order)
     mutation.mutate({ ...order });
   };
 
   const { platformData } = useContext(SanityDataContext);
   const wilayasData = platformData?.data?.result[0]?.delivery_price;
-  useEffect(() => {
-    console.log(order);
-  }, [order, quantity]);
+  
+
+  const incrementQuantity = () => {
+    setOrder(prevOrder => ({ ...prevOrder, quantity: prevOrder.quantity + 1 }));
+  };
+
+  const decrementQuantity = () => {
+    if (order.quantity > 1) {
+      setOrder(prevOrder => ({ ...prevOrder, quantity: prevOrder.quantity - 1 }));
+    }
+  };
+
   return (
     <div className="flex flex-col gap-4 border-[#D9D9D9] bg-[#FBFBFB] my-8  px-8 py-4 border">
       <p>
@@ -93,7 +108,7 @@ const OrderForm = ({ product }) => {
           type="number"
           label="رقـم الهاتف"
           onChange={(e) =>
-            setOrder((prev) => ({ ...prev, phone_number: e.target.value }))
+            setOrder((prev) => ({ ...prev, phone_number: JSON.parse(e.target.value) }))
           }
         />
         <div className="flex gap-3">
@@ -132,7 +147,7 @@ const OrderForm = ({ product }) => {
         </div>
 
         <div className="flex justify-end w-full gap-7">
-          <Button type="submit" className="w-full font-bold" color="primary">
+          <Button onClick={onOpen} type="button" className="w-full font-bold" color="primary">
             اطلـب الان
           </Button>
           <button type="submit" className="w-full font-bold">
@@ -142,20 +157,16 @@ const OrderForm = ({ product }) => {
             <button
               className="border rounded-md bg-white px-2"
               type="button"
-              onClick={() => {setQuantity((prev) => prev + 1); 
-              }}
+              onClick={incrementQuantity}
+
             >
               +
             </button>
-            <span>{quantity}</span>
+            <span>{order?.quantity}</span>
             <button
               className="border rounded-md bg-white px-2"
               type="button"
-              onClick={() => {
-                if (quantity > 1) {
-                  setQuantity((prev) => prev - 1);
-                }
-              }}
+              onClick={decrementQuantity}
             >
               -
             </button>
@@ -179,7 +190,7 @@ const OrderForm = ({ product }) => {
                     </div>
                     <div className="border-b-2 px-3 py-5 w-full flex flex-row-reverse justify-between items-center">
                       <p className="font-bold">: الكميـة</p>
-                      <p>{quantity}</p>
+                      <p>{order?.quantity}</p>
                     </div>
                     <div className="border-b-2 px-3 py-5 w-full flex flex-row-reverse justify-between items-center">
                       <p className="font-bold">: سعر الشحـن</p>

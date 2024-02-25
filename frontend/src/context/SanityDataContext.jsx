@@ -30,23 +30,11 @@ export const SanityDataProvider = ({ children }) => {
     //   refetchOnWindowFocus: false
     }
   );
-  
-    // createOrder, {
-//     onSuccess: data => {
-//        console.log(data);
-//        const message = "success"
-//        alert(message)
-//  },
-//    onError: () => {
-//         alert("there was an error")
-//  },
-//    onSettled: () => {
-//       QueryClient.invalidateQueries('createOrder')
-//  }
-//  });
+  const themeColor = platformData?.data?.result[0]?.primary_color
   let contextData = {
     products: products,
     platformData: platformData,
+    themeColor: themeColor
   };
   return (
     <SanityDataContext.Provider value={contextData}>

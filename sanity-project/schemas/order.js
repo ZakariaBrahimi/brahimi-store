@@ -1,6 +1,4 @@
 import platformData from "./platformData"
-// import WilayaPreview from "./WilayaPreview.jsx"
-//schemas/order.js
 export default {
   name: 'order',
   type: 'document',
@@ -20,17 +18,24 @@ export default {
     //   readOnly: true
     },
     {
-      name: 'wilaya',
-      type: 'reference',
-      title: 'Wilaya',
-      to: [{type: 'platform_data', filter: '_type' == "delivery_p   rice"}],
-    //   readOnly: true,
-    preview: {
-        select: {
-          delivery_price: 'delivery_price', // Select the delivery_price field
-        },
-        // component: WilayaPreview, // Custom input component to display the delivery_price field
+        name: 'wilaya',
+        type: 'reference',
+        title: 'Wilaya',
+        to: [{type: 'delivery'}]
     },
+    // {
+    //   name: 'wilaya',
+    //   type: 'reference',
+    //   title: 'Wilaya',
+    //   to: [{type: 'platform_data'}],
+    //   readOnly: true,
+    // preview: {
+    //     select: {
+    //       delivery_price: 'delivery_price', // Select the delivery_price field
+    //     },
+        // component: WilayaPreview, // Custom input component to display the delivery_price field
+    // }
+// },
     {
       name: 'phone_number',
       type: 'number',

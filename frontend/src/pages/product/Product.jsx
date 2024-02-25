@@ -65,7 +65,6 @@ const Product = () => {
   
   }
 //   const {mutate } = useContext(SanityDataContext)
-//   console.log(mutate)
   return (
     <section className="w-11/12 mx-auto mb-28 bg-white grid grid-cols-1 lg:grid-cols-2 gap-6 items-start justify-between">
       {/* Product Pics */}
@@ -99,7 +98,7 @@ const Product = () => {
           <p></p>
         </div>
         
-      <OrderForm product={JSON.stringify(data?.result[0])}/>
+      <OrderForm product={data?.result[0]}/>
       </div>
 
       {/* Description */}
