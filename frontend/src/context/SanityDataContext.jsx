@@ -30,11 +30,9 @@ export const SanityDataProvider = ({ children }) => {
     //   refetchOnWindowFocus: false
     }
   );
-  const themeColor = platformData?.data?.result[0]?.primary_color
   let contextData = {
     products: products,
     platformData: platformData,
-    themeColor: themeColor
   };
   return (
     <SanityDataContext.Provider value={contextData}>

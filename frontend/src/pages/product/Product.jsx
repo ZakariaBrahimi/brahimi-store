@@ -64,8 +64,7 @@ const Product = () => {
     }
   
   }
-//   const {mutate } = useContext(SanityDataContext)
-  return (
+    return (
     <section className="w-11/12 mx-auto mb-28 bg-white grid grid-cols-1 lg:grid-cols-2 gap-6 items-start justify-between">
       {/* Product Pics */}
       <div className=" lg:order-2 flex flex-col gap-6 lg:col-span-1">
@@ -90,9 +89,9 @@ const Product = () => {
           <h1 className=" text-3xl">{data?.result[0]?.name}</h1>
           <p className=" font-bold  text-2xl">
             <span className="text-blue-500 line-through">
-              د.ج {data?.result[0]?.price}
+              د.ج {data?.result[0]?.old_price}
             </span>{" "}
-            – <span>د.ج 200</span>
+            – <span>د.ج {data?.result[0]?.new_price}</span>
           </p>
           <p>{data?.result[0]?.short_description}</p>
           <p></p>

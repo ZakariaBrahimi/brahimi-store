@@ -8,51 +8,49 @@ export default {
       name: 'address',
       type: 'string',
       title: 'Address',
-    //   readOnly: true
+      readOnly: true
     },
     {
       name: 'product',
       type: 'reference',
       title: 'Product',
       to: [{type: 'product'}],
-    //   readOnly: true
+      readOnly: true
     },
     {
-        name: 'wilaya',
-        type: 'reference',
-        title: 'Wilaya',
-        to: [{type: 'delivery'}]
+        name: 'delivery',
+        type: 'object',
+        title: 'Delivery',
+        fields: [
+            {name: 'location', type: 'string', title: 'Location'},
+            {name: 'price', type: 'number', title: 'Price'},
+        ], 
+        readOnly: true
+           
     },
-    // {
-    //   name: 'wilaya',
-    //   type: 'reference',
-    //   title: 'Wilaya',
-    //   to: [{type: 'platform_data'}],
-    //   readOnly: true,
-    // preview: {
-    //     select: {
-    //       delivery_price: 'delivery_price', // Select the delivery_price field
-    //     },
-        // component: WilayaPreview, // Custom input component to display the delivery_price field
-    // }
-// },
     {
       name: 'phone_number',
       type: 'number',
       title: 'Phone Number',
-    //   readOnly: true
+      readOnly: true
     },
     {
       name: 'quantity',
       type: 'number',
       title: 'Quantity',
-    //   readOnly: true
+      readOnly: true
     },
     {
       name: 'full_name',
       type: 'string',
       title: 'Full Name',
-    //   readOnly: true
+      readOnly: true
+    },
+    {
+      name: 'wilaya',
+      type: 'string',
+      title: 'Wilaya',
+      readOnly: true
     },
     
   ],

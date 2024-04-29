@@ -2,12 +2,15 @@
 import { useContext, useEffect, useState } from "react";
 import {
   Button,
+  Checkbox,
   Input,
   Modal,
   ModalBody,
   ModalContent,
   ModalFooter,
   ModalHeader,
+  Radio,
+  RadioGroup,
   Select,
   SelectItem,
   useDisclosure,
@@ -15,22 +18,21 @@ import {
 import axios from "axios";
 import { useMutation } from "@tanstack/react-query";
 import SanityDataContext from "../../context/SanityDataContext";
+import { useRef } from "react";
 
 const OrderForm = ({ product }) => {
-    console.log(product)
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  console.log(product)
+  
   const [order, setOrder] = useState({
     _type: "order",
     full_name: "",
     phone_number: "",
-    wilaya: {
-        _ref: '8b80e431-a1e1-408d-b672-1b0e70968f53',
-        _type: 'delivery'
-    },
-    // address: "",
+    wilaya: {},
+    delivery: {},
     product: {
-        _ref : product?._id,
-        _type : "product"
+      _ref: product?._id,
+      _type: "product",
     },
     quantity: 1,
   });
@@ -64,24 +66,46 @@ const OrderForm = ({ product }) => {
     },
   });
   const handleSubmit = (event) => {
-    event.preventDefault()
-    console.log(typeof(product?._id))
+    event.preventDefault();
     console.log(order)
     mutation.mutate({ ...order });
+    
   };
 
   const { platformData } = useContext(SanityDataContext);
   const wilayasData = platformData?.data?.result[0]?.delivery_price;
-  
 
   const incrementQuantity = () => {
-    setOrder(prevOrder => ({ ...prevOrder, quantity: prevOrder.quantity + 1 }));
+    setOrder((prevOrder) => ({
+      ...prevOrder,
+      quantity: prevOrder.quantity + 1,
+    }));
   };
 
   const decrementQuantity = () => {
     if (order.quantity > 1) {
-      setOrder(prevOrder => ({ ...prevOrder, quantity: prevOrder.quantity - 1 }));
+      setOrder((prevOrder) => ({
+        ...prevOrder,
+        quantity: prevOrder.quantity - 1,
+      }));
     }
+  };
+
+  const [deliveryData, setDeliveryData] = useState({
+    to_home: 0,
+    to_desk: 0,
+  });
+  const handleWilayaChange = (event) => {
+    const delivery_data = JSON.parse(event.target.value);
+    setDeliveryData(delivery_data);
+    setOrder((prev) => ({ ...prev, wilaya: delivery_data?.wilaya}))
+  };
+  const handlePhoneChange = (event) => {
+    const data = JSON.parse(event.target.value);
+    setOrder((prev) => ({
+        ...prev,
+        phone_number: data,
+    }))
   };
 
   return (
@@ -97,6 +121,7 @@ const OrderForm = ({ product }) => {
           size="sm"
           type="text"
           label="الإسم الكامـل"
+        //   value={order?.full_name}
           onChange={(e) =>
             setOrder((prev) => ({ ...prev, full_name: e.target.value }))
           }
@@ -107,20 +132,20 @@ const OrderForm = ({ product }) => {
           size="sm"
           type="number"
           label="رقـم الهاتف"
-          onChange={(e) =>
-            setOrder((prev) => ({ ...prev, phone_number: JSON.parse(e.target.value) }))
-          }
+          onChange={handlePhoneChange}
+        //   value={order?.phone_number}
         />
         <div className="flex gap-3">
           <Input
+        //   value={order?.address}
             isRequired
             variant="bordered"
             size="sm"
             type="text"
             label="العنوان الكـامل"
             onChange={(e) =>
-                setOrder((prev) => ({ ...prev, address: e.target.value }))
-              }
+              setOrder((prev) => ({ ...prev, address: e.target.value }))
+            }
           />
 
           <Select
@@ -130,12 +155,8 @@ const OrderForm = ({ product }) => {
             variant="bordered"
             placeholder="اختـر ولايتك"
             className="max-w-xs"
-            onChange={(event) => {
-              setOrder((prev) => ({
-                ...prev,
-                wilaya: JSON.parse(event.target.value),
-              }));
-            }}
+            onChange={handleWilayaChange}
+            // value={order?.wilaya}
           >
             {wilayasData &&
               wilayasData.map((wilaya) => (
@@ -145,9 +166,39 @@ const OrderForm = ({ product }) => {
               ))}
           </Select>
         </div>
-
+        <div>
+          <RadioGroup
+            className="flex items-end w-full bg-green00"
+            label="سعر التوصيـل"
+            color="primary"
+            defaultValue="to_desk"
+            onChange={(event)=>setOrder((prev) => ({ ...prev, delivery: JSON.parse(event.target.value) }))}
+            // value={order?.full_name}
+          >
+            <div className="min-w-full justify-between bg-red-30">
+              <span>{deliveryData && deliveryData?.to_home}</span>
+              <Radio
+                className=" flex items-center justify-between flex-row-reverse gap-6"
+                value={JSON.stringify({location: "to_home", price: deliveryData?.to_home})}
+              >
+                 توصيـل للبيت 
+              </Radio>
+            </div>
+            <div className="w-full justify-between">
+              <span>{deliveryData && deliveryData?.to_desk}</span>
+              <Radio className=" flex flex-row-reverse gap-4 " value="to_desk">
+                توصيـل للمكتب
+              </Radio>
+            </div>
+          </RadioGroup>
+        </div>
         <div className="flex justify-end w-full gap-7">
-          <Button onClick={onOpen} type="button" className="w-full font-bold" color="primary">
+          <Button
+            onClick={onOpen}
+            type="button"
+            className="w-full font-bold"
+            color="primary"
+          >
             اطلـب الان
           </Button>
           <button type="submit" className="w-full font-bold">
@@ -158,7 +209,6 @@ const OrderForm = ({ product }) => {
               className="border rounded-md bg-white px-2"
               type="button"
               onClick={incrementQuantity}
-
             >
               +
             </button>

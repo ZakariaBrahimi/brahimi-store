@@ -9,6 +9,12 @@ export default {
       title: 'Phone Number',
     },
     {
+      name: 'delivery_name',
+      type: 'reference',
+      title: 'delivery_name',
+      to: [{type: 'delivery'}]
+    },
+    {
       name: 'primary_color',
       type: 'string',
       title: 'Primary Color',

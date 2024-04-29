@@ -21,9 +21,14 @@ export default {
         of: [{type: 'block'}]
       },
       {
-        name: 'price',
+        name: 'old_price',
         type: 'number',
-        title: 'Price'
+        title: 'Old Price'
+      },
+      {
+        name: 'new_price',
+        type: 'number',
+        title: 'New Price'
       },
       {
         name: 'product_pictures',

@@ -9,10 +9,10 @@ function ProductCard({product}) {
       })
       const urlFor = (source) => builder.image(source)
   return (
-    <div className="border hover:rotate-1 transition-transform duration-500 hover:scale-105 cursor-pointer shadow-lg rounded-md flex justify-center items-center flex-col">
+    <div className=" h-full    bg-red-00 border hover:rotate-1 transition-transform duration-500 hover:scale-105 cursor-pointer shadow-lg rounded-md flex flex-grow flex-shrink-0 items-center flex-col">
       <img className="w-full h-28 rounded-t-md shadow-md" src={urlFor(product?.product_pictures[0]?.asset?._ref)} alt="productImg" />
-      <div className="flex justify-center items-center flex-col gap-4  py-2">
-        <h2 className="px-6 mx-auto bg-green-0 line-clamp-3 text-base font-bold">{product?.name}</h2>
+      <div className="flex justify-between bg-green-40 h-full  items-center flex-col gap-4  py-2">
+        <h2 className="px-2 bg-red-300 text-center mx-auto bg-green-0 line-clamp-1 text-base font-bold">{product?.name}</h2>
         {/* stars */}
         <div className="flex gap-2">
             {[1, 2, 3, 4, 5].map((index) => (
@@ -32,9 +32,9 @@ function ProductCard({product}) {
         </div>
         {/* price */}
         <div className=" flex gap-4  font-bold text-[.9rem]">
-            <span className="text-blue-400">{product?.price} دج</span>
+            <span className="text-blue-400">{product?.new_price} دج</span>
             <span> - </span>
-            <span className="text-red-400 line-through">1200دج</span>
+            <span className="text-red-400 line-through">{product?.old_price} دج</span>
         </div>
 
       </div>
