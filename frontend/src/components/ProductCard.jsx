@@ -32,9 +32,17 @@ function ProductCard({product}) {
         </div>
         {/* price */}
         <div className=" flex gap-4  font-bold text-[.9rem]">
-            <span className="text-blue-400">{product?.new_price} دج</span>
-            <span> - </span>
-            <span className="text-red-400 line-through">{product?.old_price} دج</span>
+          {
+            !product?.old_price ? 
+              <span className="text-blue-400">{product?.new_price} دج</span>
+              :
+              <>
+                <span className="text-blue-400">{product?.new_price} دج</span>
+                <span> - </span>
+                <span className="text-red-400 line-through">{product?.old_price} دج</span>
+              </>
+
+          }
         </div>
 
       </div>
